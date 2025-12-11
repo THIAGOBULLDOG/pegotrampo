@@ -8,10 +8,12 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
+import { PricingModal } from '@/components/PricingModal';
 
 export function Hero() {
   const navigate = useNavigate();
   const [showVideoModal, setShowVideoModal] = useState(false);
+  const [showPricingModal, setShowPricingModal] = useState(false);
 
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
@@ -74,7 +76,7 @@ export function Hero() {
           <Button
             variant="outline"
             size="xl"
-            onClick={() => navigate('/anunciar')}
+            onClick={() => setShowPricingModal(true)}
             className="min-w-[220px]"
           >
             <Megaphone className="w-5 h-5" />
@@ -83,13 +85,17 @@ export function Hero() {
         </div>
 
         {/* Stats */}
-        <div className="mt-16 grid grid-cols-2 gap-8 max-w-md mx-auto animate-fade-in">
+        <div className="mt-16 grid grid-cols-2 md:grid-cols-3 gap-8 max-w-3xl mx-auto animate-fade-in">
           <div className="text-center">
             <p className="text-3xl md:text-4xl font-bold text-foreground">0</p>
             <p className="text-sm text-muted-foreground">Vagas</p>
           </div>
           <div className="text-center">
             <p className="text-3xl md:text-4xl font-bold text-foreground">0.0</p>
+            <p className="text-sm text-muted-foreground">Avaliação</p>
+          </div>
+          <div className="text-center col-span-2 md:col-span-1">
+            <p className="text-3xl md:text-4xl font-bold text-foreground">4.9</p>
             <p className="text-sm text-muted-foreground">Avaliação</p>
           </div>
         </div>
@@ -121,6 +127,18 @@ export function Hero() {
           </div>
         </DialogContent>
       </Dialog>
+
+      {/* Pricing Modal */}
+      <PricingModal
+        open={showPricingModal}
+        onOpenChange={setShowPricingModal}
+        onSelectPlan={(plan) => {
+          setShowPricingModal(false);
+          // Redirect to registration/login regardless of plan choice for now
+          // In a real app, we would pass the selected plan
+          navigate('/cadastro');
+        }}
+      />
     </section>
   );
 }
